@@ -10,7 +10,7 @@ class Employee:
 
     @property
     def full_name(self):
-        return f'{self.first.title()}{self.last.title()}'
+        return f'{self.first.title()} {self.last.title()}'
 
     @property
     def email(self):

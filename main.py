@@ -23,18 +23,21 @@ def get_selection():
 
 # Function to add an employee
 def createEmp():
-    addFirst = input("Enter the employee's first name: ")
-    addLast = input("Enter the employyee's last name: ")
-
-    # TODO add this new employee to the file
     # TODO add logging info
-    newEmp = Employee(addFirst, addLast)
-    return newEmp
+    # TODO add this new employee to the file
+
+    with open('empData.txt', 'a') as f:
+        addFirst = input("Enter the employee's first name: ")
+        addLast = input("Enter the employyee's last name: ")
+
+        newEmp = Employee(addFirst, addLast)
+        f.write(f'Name: {newEmp.full_name}, Email: {newEmp.email}\n')
+    
+    get_selection()
 
 # Function to create a user password
 def createPass():
     print('We need to set your password. Please choose a password with the following:')
-    print('1) Must be minimum of 6 characters \n2) Must have one captial letter \n3) Must use one of the four special charaters (!?_@)')
 
     # Minimum 8 characters.
     # The alphabets must be between [a-z]
@@ -70,8 +73,6 @@ def createPass():
 
     if flag ==-1: 
         print("Not a Valid Password") 
-
-
 
 
 print('Welcome to the Employee Management console. \n Please select from the following Items:')
