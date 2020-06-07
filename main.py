@@ -10,8 +10,7 @@ def get_selection():
     if choice == 1:
         createEmp()
     elif choice == 2:
-        # TODO Intigrate the create password fuction
-        print("Manage login cradentials")
+        createPass()
     elif choice == 3:
         print("Edit availability for employee")
     elif choice == 4:
@@ -24,7 +23,6 @@ def get_selection():
 # Function to add an employee
 def createEmp():
     # TODO add logging info
-    # TODO add this new employee to the file
 
     with open('empData.txt', 'a') as f:
         addFirst = input("Enter the employee's first name: ")
@@ -37,15 +35,9 @@ def createEmp():
 
 # Function to create a user password
 def createPass():
-    print('We need to set your password. Please choose a password with the following:')
-
-    # Minimum 8 characters.
-    # The alphabets must be between [a-z]
-    # At least one alphabet should be of Upper Case [A-Z]
-    # At least 1 number or digit between [0-9].
-    # At least 1 character from [ _ or @ or $ ].
-    # Python program to check validation of password 
-    password = "R@m@_f0rtu9e$"
+    empPassInstruction()
+    
+    password = input('Enter new password: ')
     flag = 0
     while True: 
         if (len(password)<8): 
@@ -68,12 +60,21 @@ def createPass():
             break
         else: 
             flag = 0
-            print("Valid Password") 
+            print("Valid Password")
             break
 
     if flag ==-1: 
-        print("Not a Valid Password") 
+        print("Not a Valid Password")
 
+    get_selection()
+
+def empPassInstruction():
+    print('We need to set your password, please choose a password with the following:')
+    print('Must be a minimum of 8 characters.')
+    print('The alphabets must be between [a-z]')
+    print('Must have at least one upper case letter')
+    print('Must contain at least one number from 0-9')
+    print('Must have at least one special character from [ _ or @ or $ ].')
 
 print('Welcome to the Employee Management console. \n Please select from the following Items:')
 print('1: Create new employee \n2: Manage login cradentials \n3: Edit availability for employee \n4: Generate email list \n5: Quit')
