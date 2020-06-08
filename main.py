@@ -35,36 +35,42 @@ def createEmp():
 
 # Function to create a user password
 def createPass():
-    empPassInstruction()
-    
-    password = input('Enter new password: ')
-    flag = 0
-    while True: 
-        if (len(password)<8): 
-            flag = -1
-            break
-        elif not re.search("[a-z]", password): 
-            flag = -1
-            break
-        elif not re.search("[A-Z]", password): 
-            flag = -1
-            break
-        elif not re.search("[0-9]", password): 
-            flag = -1
-            break
-        elif not re.search("[_@$]", password): 
-            flag = -1
-            break
-        elif re.search("\s", password): 
-            flag = -1
-            break
-        else: 
-            flag = 0
-            print("Valid Password")
-            break
+    workingEmp = input('Please enter the name of the employee to create a password for:')
 
-    if flag ==-1: 
-        print("Not a Valid Password")
+    with open('empData.txt', 'r') as f:
+        if workingEmp in f.read():
+            empPassInstruction()
+            
+            password = input('Enter new password: ')
+            flag = 0
+            while True: 
+                if (len(password)<8): 
+                    flag = -1
+                    break
+                elif not re.search("[a-z]", password): 
+                    flag = -1
+                    break
+                elif not re.search("[A-Z]", password): 
+                    flag = -1
+                    break
+                elif not re.search("[0-9]", password): 
+                    flag = -1
+                    break
+                elif not re.search("[_@$]", password): 
+                    flag = -1
+                    break
+                elif re.search("\s", password): 
+                    flag = -1
+                    break
+                else: 
+                    flag = 0
+                    print("Valid password and stored")
+                    with open('empPass.txt', 'a') as f:
+                        f.write(f'Name: {workingEmp}, Password: {password}\n')
+                    break
+
+            if flag ==-1: 
+                print("Not a Valid Password")
 
     get_selection()
 
