@@ -1,7 +1,6 @@
 from Employee import Employee
 import os
 import re
-import logging
 
 # This function displays the menu that the user will encounter.
 def display_menu():
@@ -52,34 +51,36 @@ def create_emp():
 
 #Function to create a user password
 def create_pass():
+    # TODO write check to see if employee is in the storage file.
+    # TODO write password hashing
         
-        while True:
-            display_password_instructions()
-            password = input('Enter new password: ')
-            errors = []  # Initialize this with zero elements. If an error occurs, then add it to array
-            if (len(password) < 8):
-                    errors.append("Password length must be above 8 characters.")
-            if not re.search("[a-z]", password):
-                errors.append("Password must contain at least one lowercase letter.")
-            if not re.search("[A-Z]", password):
-                errors.append("Password must contain at least one uppercase letter.")
-            if not re.search("[0-9]", password):
-                errors.append("Password must contain at least one number.")
-            if not re.search("[_@$]", password):
-                errors.append("Password must contain at least one special character.")
-            # This enables an error if any whitespace characters are detected. I don't think it's used correctly, though.
-            # String constants need an 'r' prefix, so I think it should be (r"\s", password)
-            if re.search("\s", password):
-                errors.append("No whitespace characters are allowed.")
+    while True:
+        display_password_instructions()
+        password = input('Enter new password: ')
+        errors = []  # Initialize this with zero elements. If an error occurs, then add it to array
+        if (len(password) < 8):
+                errors.append("Password length must be above 8 characters.")
+        if not re.search("[a-z]", password):
+            errors.append("Password must contain at least one lowercase letter.")
+        if not re.search("[A-Z]", password):
+            errors.append("Password must contain at least one uppercase letter.")
+        if not re.search("[0-9]", password):
+            errors.append("Password must contain at least one number.")
+        if not re.search("[_@$]", password):
+            errors.append("Password must contain at least one special character.")
+        # This enables an error if any whitespace characters are detected. I don't think it's used correctly, though.
+        # String constants need an 'r' prefix, so I think it should be (r"\s", password)
+        if re.search("\s", password):
+            errors.append("No whitespace characters are allowed.")
 
-            if (len(errors) > 0):  # If errors contains ANY elements, then print the errors and loop through again.
-                print("The following error(s) occured.")
-                # Print each error using a new line to separate each error
-                for error in errors:
-                    print(error)
-            else:
-                print("Valid password and stored")
-                break
+        if (len(errors) > 0):  # If errors contains ANY elements, then print the errors and loop through again.
+            print("The following error(s) occured.")
+            # Print each error using a new line to separate each error
+            for error in errors:
+                print(error)
+        else:
+            print("Valid password and stored")
+            break
                 
 
 # This is the entry point to the application. This is the first line of code that will be executed.
