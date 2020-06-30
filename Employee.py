@@ -16,6 +16,3 @@ class Employee:
     def email(self):
         return f'{self.first[0].upper()}.{self.last.title()}@companyemail.com'
 
-    
-
-
