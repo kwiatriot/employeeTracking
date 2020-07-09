@@ -1,4 +1,5 @@
 from Employee import Employee
+import hashlib
 import os
 import re
 
@@ -20,7 +21,7 @@ def display_password_instructions():
     print('Must have at least one special character from [ _ or @ or $ ].')
     print()
 
-#This function will cycle through the menu 
+#This function will cycle through the main menu 
 def make_menu_decision():
     while True:
         display_menu()
@@ -39,7 +40,8 @@ def make_menu_decision():
         else:
             print("I am sorry; I do not recognize this option")
             
-# This function will add the first and last name to empData file.
+# This function will add the first and last name to empData file. 
+# This will also create and store the email
 def create_emp():
     # TODO add logging info
     with open('empData.txt', 'a') as f:
@@ -47,14 +49,21 @@ def create_emp():
         addLast = input("Enter the employyee's last name: ")
         newEmp = Employee(addFirst, addLast)
         f.write(f'Name: {newEmp.full_name}, Email: {newEmp.email}\n')
-        print("Name successfully added.")
+        print("Employee successfully added.")
+
+def check_emp_file():
+    emp = input("Enter the employee's name: ")
+
+    with open('empData.txt', 'r') as f:
+        if emp in f.read():
+            return(True)
+        else:
+            print("ERROR: No record of that name, please create employee first!")
+
 
 #Function to create a user password
 def create_pass():
-    # TODO write check to see if employee is in the storage file.
-    # TODO write password hashing
-        
-    while True:
+    while check_emp_file() is True:
         display_password_instructions()
         password = input('Enter new password: ')
         errors = []  # Initialize this with zero elements. If an error occurs, then add it to array
@@ -79,17 +88,15 @@ def create_pass():
             for error in errors:
                 print(error)
         else:
+            with open('empPass.txt', 'a') as f:
+                user = input("Please enter the name of the employee to be stored: ")
+                salt = os.urandom(32)
+                key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000)
+
+                f.write(f'Name: {user}\nSalt: {salt}\nKey: {key}')
             print("Valid password and stored")
             break
-                
 
 # This is the entry point to the application. This is the first line of code that will be executed.
 make_menu_decision()
 
-#FINAL NOTES
-# Don't be afraid to create multiple functions. Each function should do 1 and only 1 thing. This makes it
-# easier to test. If you have a function that does 5 things and it doesn't work, what doesn't work? Is it
-# the first thing, the second thing, etc. I would have a function that only stores the password and that's all that it does.
-# You can call it once password verification is completed. Also, try not to have a function call another function unless it returns to it at the exact place.
-# For example, any function that calls display_menu() does that and returns to the place it left off immediately.
-# Good luck.
